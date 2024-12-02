@@ -1,0 +1,1142 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Stock Management",
+        "description": "API for managing stock items, categories, and sales",
+        "contact": {
+            "email": "inolatse@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/articles": {
+            "get": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Get all articles",
+                "operationId": "a12f7de122ef7018f39af8638108fcbf",
+                "responses": {
+                    "200": {
+                        "description": "A list of articles",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Article"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/article/create": {
+            "post": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Create a new article",
+                "operationId": "502177eb5601f1141ed7b0fee507aad9",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "priceInit",
+                                    "available_quantity",
+                                    "categorie_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "New Article"
+                                    },
+                                    "priceInit": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "100.00"
+                                    },
+                                    "available_quantity": {
+                                        "type": "integer",
+                                        "example": "50"
+                                    },
+                                    "categorie_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Article created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Article"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/v1/article/{id}": {
+            "get": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Get article by ID",
+                "operationId": "81b4bdb0efd68cfc183904aaf3dc4001",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the article",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Article details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Article"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Update article by ID",
+                "operationId": "607974371c23919a07f5d2b09049ecf8",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the article",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "priceInit",
+                                    "available_quantity",
+                                    "categorie_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated Article Name"
+                                    },
+                                    "priceInit": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": "120.00"
+                                    },
+                                    "available_quantity": {
+                                        "type": "integer",
+                                        "example": "70"
+                                    },
+                                    "categorie_id": {
+                                        "type": "integer",
+                                        "example": "2"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Article updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Article"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Article"
+                ],
+                "summary": "Delete article by ID",
+                "operationId": "9ceaa4b9ca677c5d4f9d448d1ce10bf3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the article to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Article deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Article was deleted successfully!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Article not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/categories": {
+            "get": {
+                "tags": [
+                    "Categorie"
+                ],
+                "summary": "Get all categories",
+                "operationId": "94e034e2bdb507c5e970d49c34fdc846",
+                "responses": {
+                    "200": {
+                        "description": "A list of categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Category"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Categorie"
+                ],
+                "summary": "Create a new category",
+                "operationId": "c7ed1b35eb40d77126f20ff47615f09a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Electronics"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Devices and gadgets"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/v1/categories/{id}": {
+            "get": {
+                "tags": [
+                    "Categorie"
+                ],
+                "summary": "Get category by ID",
+                "operationId": "46c5c3954df07301e16ee08eaf957b86",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the category",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Categorie"
+                ],
+                "summary": "Update a category",
+                "operationId": "c64176ec9c818ab3457de40af939694c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the category",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated Category Name"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Updated description"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Category updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categorie"
+                ],
+                "summary": "Delete a category",
+                "operationId": "7b13d3ed60e6e7337941a54b21084983",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the category to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Category deleted successfully!"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Category not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/enter/article": {
+            "post": {
+                "tags": [
+                    "EnterStore"
+                ],
+                "summary": "Add a single item to the stock",
+                "operationId": "88586379c3174cef7a4fb4f00ac5ed89",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "quantity",
+                                    "article_id"
+                                ],
+                                "properties": {
+                                    "quantity": {
+                                        "description": "Quantity of the article being entered",
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "article_id": {
+                                        "description": "ID of the article",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Item successfully added to the stock",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EnterStore"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/v1/enter/articles": {
+            "post": {
+                "tags": [
+                    "EnterStore"
+                ],
+                "summary": "Add multiple items to the stock",
+                "operationId": "052889a52c3592f3a4b6b398938c6267",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "data": {
+                                        "description": "List of articles to be entered",
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "quantity",
+                                                "article_id"
+                                            ],
+                                            "properties": {
+                                                "quantity": {
+                                                    "description": "Quantity of the article",
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "article_id": {
+                                                    "description": "ID of the article",
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Items successfully added to the stock",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Entrées de stock enregistrés avec succès."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/EnterStore"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/v1/enter/articles/statistics": {
+            "get": {
+                "tags": [
+                    "EnterStore"
+                ],
+                "summary": "Get overall statistics for entered stock",
+                "operationId": "91c2124c4a89c017ad60b65ddcfeb9c6",
+                "responses": {
+                    "200": {
+                        "description": "Statistics retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_quantity": {
+                                            "description": "Total quantity of all entered items",
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "articles": {
+                                            "description": "List of articles with their total entered quantity",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "article_id": {
+                                                        "description": "ID of the article",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "article_name": {
+                                                        "description": "Name of the article",
+                                                        "type": "string",
+                                                        "example": "Article A"
+                                                    },
+                                                    "quantity": {
+                                                        "description": "Total quantity entered for the article",
+                                                        "type": "integer",
+                                                        "example": 50
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "most_enter": {
+                                            "description": "The most entered article",
+                                            "properties": {
+                                                "article_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "article_name": {
+                                                    "type": "string",
+                                                    "example": "Article A"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/api/v1/enter/articles/statistics/period": {
+            "get": {
+                "tags": [
+                    "EnterStore"
+                ],
+                "summary": "Get stock entry statistics filtered by date range",
+                "operationId": "3434600369e39d4dd31648122c0f2dd1",
+                "parameters": [
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Start date for filtering (format: YYYY-MM-DD)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2024-11-01"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "End date for filtering (format: YYYY-MM-DD)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2024-11-30"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Statistics retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_quantity": {
+                                            "description": "Total quantity of all entered items in the selected date range",
+                                            "type": "integer",
+                                            "example": 50
+                                        },
+                                        "articles": {
+                                            "description": "List of articles with their total entered quantity in the date range",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "article_id": {
+                                                        "description": "ID of the article",
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "article_name": {
+                                                        "description": "Name of the article",
+                                                        "type": "string",
+                                                        "example": "Article B"
+                                                    },
+                                                    "quantity": {
+                                                        "description": "Total quantity entered for the article",
+                                                        "type": "integer",
+                                                        "example": 30
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "most_enter": {
+                                            "description": "The most entered article in the date range",
+                                            "properties": {
+                                                "article_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "article_name": {
+                                                    "type": "string",
+                                                    "example": "Article B"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 30
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/v1/sell/article": {
+            "post": {
+                "tags": [
+                    "OutStore"
+                ],
+                "summary": "Create a single OutStore entry",
+                "description": "Enregistre une seule sortie d'article du stock.",
+                "operationId": "280e03da220aa42ce8b4a496ecdfa779",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "quantity",
+                                    "article_id"
+                                ],
+                                "properties": {
+                                    "quantity": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "article_id": {
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Article removed from stock successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OutStore"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/v1/sell/articles": {
+            "post": {
+                "tags": [
+                    "OutStore"
+                ],
+                "summary": "Create multiple OutStore entries",
+                "description": "Enregistre plusieurs sorties d'articles du stock en une seule requête.",
+                "operationId": "c8fa4574f6b328efd3264f56088aaec2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "data"
+                                ],
+                                "properties": {
+                                    "data": {
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "quantity",
+                                                "article_id"
+                                            ],
+                                            "properties": {
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "article_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Articles removed from stock successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorties de stock créées avec succès."
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/OutStore"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/v1/sell/articles/statistics": {
+            "get": {
+                "tags": [
+                    "OutStore"
+                ],
+                "summary": "Retrieve statistics on article sales",
+                "description": "Obtient des statistiques sur les sorties d'articles, comme la quantité totale et les articles les plus sortis.",
+                "operationId": "3792ba446746e6e1e2e2f7e7c1391590",
+                "responses": {
+                    "200": {
+                        "description": "Statistiques récupérées avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_quantity": {
+                                            "type": "integer",
+                                            "example": 100
+                                        },
+                                        "articles": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "article_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "article_name": {
+                                                        "type": "string",
+                                                        "example": "Article A"
+                                                    },
+                                                    "quantity": {
+                                                        "type": "integer",
+                                                        "example": 50
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "most_sold": {
+                                            "properties": {
+                                                "article_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "article_name": {
+                                                    "type": "string",
+                                                    "example": "Article A"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 50
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/sell/articles/statistics/period": {
+            "get": {
+                "tags": [
+                    "OutStore"
+                ],
+                "summary": "Retrieve statistics on article sales",
+                "description": "Obtient des statistiques sur les sorties d'articles, comme la quantité totale, les articles les plus sortis et les sorties dans une plage de dates.",
+                "operationId": "af6c8da6b065b46eda1f5085650554a8",
+                "parameters": [
+                    {
+                        "name": "start_date",
+                        "in": "query",
+                        "description": "Date de début pour filtrer les statistiques (format: YYYY-MM-DD)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2024-11-01"
+                        }
+                    },
+                    {
+                        "name": "end_date",
+                        "in": "query",
+                        "description": "Date de fin pour filtrer les statistiques (format: YYYY-MM-DD)",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date",
+                            "example": "2024-11-30"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Statistiques récupérées avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "total_quantity": {
+                                            "description": "Quantité totale des articles sortis",
+                                            "type": "integer",
+                                            "example": 150
+                                        },
+                                        "articles": {
+                                            "description": "Liste des articles avec leurs statistiques",
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "article_id": {
+                                                        "description": "ID de l'article",
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "article_name": {
+                                                        "description": "Nom de l'article",
+                                                        "type": "string",
+                                                        "example": "Article A"
+                                                    },
+                                                    "quantity": {
+                                                        "description": "Quantité totale sortie pour cet article",
+                                                        "type": "integer",
+                                                        "example": 50
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "most_sold": {
+                                            "description": "Article le plus vendu dans la période sélectionnée",
+                                            "properties": {
+                                                "article_id": {
+                                                    "description": "ID de l'article",
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "article_name": {
+                                                    "description": "Nom de l'article",
+                                                    "type": "string",
+                                                    "example": "Article C"
+                                                },
+                                                "quantity": {
+                                                    "description": "Quantité totale sortie pour cet article",
+                                                    "type": "integer",
+                                                    "example": 70
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Requête invalide (exemple : format de date incorrect)"
+                    },
+                    "500": {
+                        "description": "Erreur interne du serveur"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Article": {
+                "required": [
+                    "name",
+                    "priceInit",
+                    "priceSell",
+                    "available_quantity",
+                    "categorie_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "priceInit": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "priceSell": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "available_quantity": {
+                        "type": "integer"
+                    },
+                    "categorie_id": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "Category": {
+                "required": [
+                    "name",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "EnterStore": {
+                "required": [
+                    "quantity",
+                    "article_id"
+                ],
+                "properties": {
+                    "quantity": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "article_id": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "type": "object"
+            },
+            "OutStore": {
+                "required": [
+                    "quantity",
+                    "solde",
+                    "soldeTotal",
+                    "article_id"
+                ],
+                "properties": {
+                    "quantity": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "solde": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "soldeTotal": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "article_id": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Article",
+            "description": "Article"
+        },
+        {
+            "name": "Categorie",
+            "description": "Categorie"
+        },
+        {
+            "name": "EnterStore",
+            "description": "EnterStore"
+        },
+        {
+            "name": "OutStore",
+            "description": "OutStore"
+        }
+    ]
+}
